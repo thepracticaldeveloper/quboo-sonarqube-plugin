@@ -1,0 +1,11 @@
+**/target/
+
+# Eclipse configuration files
+**/.classpath
+**/.settings/
+**/.project
+**/.springBeans
+
+# IntelliJ configuration files
+**/.idea/
+**/*.iml
