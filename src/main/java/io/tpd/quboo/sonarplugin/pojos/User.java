@@ -9,7 +9,8 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
   "login",
-  "name"
+  "name",
+  "active"
 })
 public class User {
 
@@ -17,8 +18,20 @@ public class User {
   private String login;
   @JsonProperty("name")
   private String name;
+  @JsonProperty("active")
+  private boolean active;
   @JsonIgnore
   private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+  @JsonProperty("active")
+  public boolean isActive() {
+    return active;
+  }
+
+  @JsonProperty("active")
+  public void setActive(final boolean active) {
+    this.active = active;
+  }
 
   @JsonProperty("login")
   public String getLogin() {
@@ -52,7 +65,9 @@ public class User {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("login", login).append("name", name).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this).append("login", login).append("name", name)
+      .append("active", active)
+      .append("additionalProperties", additionalProperties).toString();
   }
 
 }
