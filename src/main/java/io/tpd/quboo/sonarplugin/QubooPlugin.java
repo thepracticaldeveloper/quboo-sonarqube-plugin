@@ -10,7 +10,7 @@ import org.sonar.api.Plugin;
  */
 public class QubooPlugin implements Plugin {
 
-  public static final String QUBOO_SERVER = "http://localhost:8080";
+  public static final String QUBOO_SERVER = "https://api.quboo.io";
   public static final String QUBOO_HEADER_ACCESS_KEY = "x-quboo-access-key";
   public static final String QUBOO_HEADER_SECRET_KEY = "x-quboo-secret-key";
 
