@@ -66,7 +66,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
     boolean moreData = true;
     IssuesWrapper wrapper = new IssuesWrapper();
     while (moreData) {
-      final Request request = new Request.Builder().url(server.getPublicRootUrl() + "/api/issues/search?ps=200&p=" + pageNumber).get().build();
+      final Request request = new Request.Builder().url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&ps=200&p=" + pageNumber).get().build();
       final Response response = http.newCall(request).execute();
       final String body = response.body().string();
       final Issues issues = mapper.readValue(body, Issues.class);

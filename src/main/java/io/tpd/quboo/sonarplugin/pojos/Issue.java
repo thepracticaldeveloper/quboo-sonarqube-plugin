@@ -48,7 +48,7 @@ public class Issue {
   @JsonProperty("textRange")
   private TextRange textRange;
   @JsonProperty("flows")
-  private List<Object> flows = new ArrayList<Object>();
+  private List<Object> flows = new ArrayList<>();
   @JsonProperty("resolution")
   private String resolution;
   @JsonProperty("status")
