@@ -5,7 +5,6 @@ import io.tpd.quboo.sonarplugin.pojos.Users;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UsersWrapper {
 
@@ -17,9 +16,7 @@ public class UsersWrapper {
 
   public void filterAndAddUsers(final Users users) {
     this.users.addAll(
-      users.getUsers().stream()
-        .filter(User::isActive)
-        .collect(Collectors.toList())
+      users.getUsers()
     );
   }
 

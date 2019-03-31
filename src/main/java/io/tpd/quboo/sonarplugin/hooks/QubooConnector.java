@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tpd.quboo.sonarplugin.QubooPlugin;
 import io.tpd.quboo.sonarplugin.dtos.IssuesWrapper;
 import io.tpd.quboo.sonarplugin.dtos.UsersWrapper;
+import io.tpd.quboo.sonarplugin.http.HttpClients;
 import io.tpd.quboo.sonarplugin.pojos.Issues;
 import io.tpd.quboo.sonarplugin.pojos.Paging;
 import io.tpd.quboo.sonarplugin.pojos.Users;
@@ -28,7 +29,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
   private final OkHttpClient http;
 
   public QubooConnector(final Server server) {
-    this.http = new OkHttpClient();
+    this.http = HttpClients.getUnsafeOkHttpClient();
     this.server = server;
     this.mapper = new ObjectMapper();
   }
@@ -57,7 +58,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
       .build();
     final Response response = http.newCall(request).execute();
     final String body = response.body().string();
-    log.info("Response " + body);
+    log.info("Response " + response.code() + " | " + body);
   }
 
   private IssuesWrapper getIssues() throws Exception {
@@ -86,7 +87,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
       .build();
     final Response response = http.newCall(request).execute();
     final String body = response.body().string();
-    log.info("Response " + body);
+    log.info("Response " + response.code() + " | " + body);
   }
 
   private UsersWrapper getUsers() {
