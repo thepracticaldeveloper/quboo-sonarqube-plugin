@@ -21,7 +21,7 @@ public class Paging {
   @JsonProperty("total")
   private Integer total;
   @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * @return The pageIndex
