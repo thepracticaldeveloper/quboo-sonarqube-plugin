@@ -60,7 +60,7 @@ public class Issue {
   @JsonProperty("author")
   private String author;
   @JsonProperty("tags")
-  private List<String> tags = new ArrayList<String>();
+  private List<String> tags = new ArrayList<>();
   @JsonProperty("creationDate")
   private String creationDate;
   @JsonProperty("updateDate")
@@ -70,7 +70,7 @@ public class Issue {
   @JsonProperty("line")
   private Integer line;
   @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * @return The key
