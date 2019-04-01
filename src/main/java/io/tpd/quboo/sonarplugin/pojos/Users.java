@@ -1,25 +1,20 @@
 package io.tpd.quboo.sonarplugin.pojos;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-  "paging",
-  "users"
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Users {
 
   @JsonProperty("paging")
   private Paging paging;
   @JsonProperty("users")
   private List<User> users = null;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   @JsonProperty("paging")
   public Paging getPaging() {
@@ -41,19 +36,9 @@ public class Users {
     this.users = users;
   }
 
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("paging", paging).append("users", users).append("additionalProperties", additionalProperties).toString();
+    return new ToStringBuilder(this).append("paging", paging).append("users", users).toString();
   }
 
 }

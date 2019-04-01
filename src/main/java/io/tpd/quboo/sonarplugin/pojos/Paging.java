@@ -7,11 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-  "pageIndex",
-  "pageSize",
-  "total"
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Paging {
 
   @JsonProperty("pageIndex")
@@ -20,8 +16,6 @@ public class Paging {
   private Integer pageSize;
   @JsonProperty("total")
   private Integer total;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * @return The pageIndex
@@ -89,21 +83,6 @@ public class Paging {
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
-  }
-
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
-  public Paging withAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-    return this;
   }
 
 }

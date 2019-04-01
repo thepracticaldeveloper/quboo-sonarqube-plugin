@@ -10,16 +10,16 @@ import io.tpd.quboo.sonarplugin.pojos.Paging;
 import io.tpd.quboo.sonarplugin.pojos.Users;
 import io.tpd.quboo.sonarplugin.settings.QubooProperties;
 import okhttp3.*;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
 import org.sonar.api.platform.Server;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
+import static io.tpd.quboo.sonarplugin.settings.QubooProperties.DEFAULT_ACCESS_KEY;
+
 /**
- * Sends stats to the Quboo server after an analysis meeting these conditions:
- * 1. On a 'master' branch
- * 2. No more than 5 times a day
- * 3. Issues created before today
+ * Sends stats to the Quboo server after an analysis
  */
 public class QubooConnector implements PostProjectAnalysisTask {
 
@@ -38,14 +38,18 @@ public class QubooConnector implements PostProjectAnalysisTask {
   public void finished(ProjectAnalysis analysis) {
     final String qubooKey = analysis.getScannerContext().getProperties().get(QubooProperties.ACCESS_KEY);
     final String qubooSecret = analysis.getScannerContext().getProperties().get(QubooProperties.SECRET_KEY);
-    log.info("Connecting to Quboo with quboo key: " + qubooKey);
-    try {
-      final UsersWrapper allUsers = getUsers();
-      sendUsersToQuboo(allUsers, qubooKey, qubooSecret);
-      final IssuesWrapper allIssues = getIssues();
-      sendIssuesToQuboo(allIssues, qubooKey, qubooSecret);
-    } catch (final Exception e) {
-      log.error("Error while trying to connect to Quboo", e);
+    if (!StringUtils.isEmpty(qubooKey) && !DEFAULT_ACCESS_KEY.equals(qubooKey)) {
+      log.info("Connecting to Quboo with quboo key: " + qubooKey);
+      try {
+        final UsersWrapper allUsers = getUsers();
+        sendUsersToQuboo(allUsers, qubooKey, qubooSecret);
+        final IssuesWrapper allIssues = getIssues();
+        sendIssuesToQuboo(allIssues, qubooKey, qubooSecret);
+      } catch (final Exception e) {
+        log.error("Error while trying to connect to Quboo", e);
+      }
+    } else {
+      log.info("Quboo plugin is disabled. Enter your access and secret keys to enable it.");
     }
   }
 
@@ -74,7 +78,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
       moreData = moreData(issues.getPaging(), issues.getIssues().size());
       pageNumber++;
     }
-    log.info("There are " + wrapper.getIssues().size() + " issues");
+    log.info("Sending " + wrapper.getIssues().size() + " issues to Quboo");
     return wrapper;
   }
 
@@ -108,7 +112,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
         break;
       }
     }
-    log.info("There are " + wrapper.getUsers().size() + " users");
+    log.info("Sending " + wrapper.getUsers().size() + " users to Quboo");
     return wrapper;
   }
 

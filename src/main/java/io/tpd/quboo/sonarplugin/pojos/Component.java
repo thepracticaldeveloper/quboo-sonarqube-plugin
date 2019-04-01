@@ -1,24 +1,12 @@
 package io.tpd.quboo.sonarplugin.pojos;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-  "id",
-  "key",
-  "uuid",
-  "enabled",
-  "qualifier",
-  "name",
-  "longName",
-  "path",
-  "projectId",
-  "subProjectId"
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Component {
 
   @JsonProperty("id")
@@ -29,20 +17,10 @@ public class Component {
   private String uuid;
   @JsonProperty("enabled")
   private Boolean enabled;
-  @JsonProperty("qualifier")
-  private String qualifier;
-  @JsonProperty("name")
-  private String name;
-  @JsonProperty("longName")
-  private String longName;
-  @JsonProperty("path")
-  private String path;
   @JsonProperty("projectId")
   private Integer projectId;
   @JsonProperty("subProjectId")
   private Integer subProjectId;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   /**
    * @return The id
@@ -129,90 +107,6 @@ public class Component {
   }
 
   /**
-   * @return The qualifier
-   */
-  @JsonProperty("qualifier")
-  public String getQualifier() {
-    return qualifier;
-  }
-
-  /**
-   * @param qualifier The qualifier
-   */
-  @JsonProperty("qualifier")
-  public void setQualifier(String qualifier) {
-    this.qualifier = qualifier;
-  }
-
-  public Component withQualifier(String qualifier) {
-    this.qualifier = qualifier;
-    return this;
-  }
-
-  /**
-   * @return The name
-   */
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * @param name The name
-   */
-  @JsonProperty("name")
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Component withName(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * @return The longName
-   */
-  @JsonProperty("longName")
-  public String getLongName() {
-    return longName;
-  }
-
-  /**
-   * @param longName The longName
-   */
-  @JsonProperty("longName")
-  public void setLongName(String longName) {
-    this.longName = longName;
-  }
-
-  public Component withLongName(String longName) {
-    this.longName = longName;
-    return this;
-  }
-
-  /**
-   * @return The path
-   */
-  @JsonProperty("path")
-  public String getPath() {
-    return path;
-  }
-
-  /**
-   * @param path The path
-   */
-  @JsonProperty("path")
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-  public Component withPath(String path) {
-    this.path = path;
-    return this;
-  }
-
-  /**
    * @return The projectId
    */
   @JsonProperty("projectId")
@@ -257,21 +151,6 @@ public class Component {
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
-  }
-
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
-  public Component withAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-    return this;
   }
 
 }

@@ -1,16 +1,15 @@
 package io.tpd.quboo.sonarplugin.pojos;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
   "key",
   "rule",
@@ -39,38 +38,24 @@ public class Issue {
   private String rule;
   @JsonProperty("severity")
   private String severity;
-  @JsonProperty("component")
-  private String component;
   @JsonProperty("componentId")
   private Integer componentId;
   @JsonProperty("project")
   private String project;
-  @JsonProperty("textRange")
-  private TextRange textRange;
-  @JsonProperty("flows")
-  private List<Object> flows = new ArrayList<>();
   @JsonProperty("resolution")
   private String resolution;
   @JsonProperty("status")
   private String status;
-  @JsonProperty("message")
-  private String message;
   @JsonProperty("debt")
   private String debt;
   @JsonProperty("author")
   private String author;
-  @JsonProperty("tags")
-  private List<String> tags = new ArrayList<>();
   @JsonProperty("creationDate")
   private String creationDate;
   @JsonProperty("updateDate")
   private String updateDate;
   @JsonProperty("closeDate")
   private String closeDate;
-  @JsonProperty("line")
-  private Integer line;
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
 
   /**
    * @return The key
@@ -136,27 +121,6 @@ public class Issue {
   }
 
   /**
-   * @return The component
-   */
-  @JsonProperty("component")
-  public String getComponent() {
-    return component;
-  }
-
-  /**
-   * @param component The component
-   */
-  @JsonProperty("component")
-  public void setComponent(String component) {
-    this.component = component;
-  }
-
-  public Issue withComponent(String component) {
-    this.component = component;
-    return this;
-  }
-
-  /**
    * @return The componentId
    */
   @JsonProperty("componentId")
@@ -195,48 +159,6 @@ public class Issue {
 
   public Issue withProject(String project) {
     this.project = project;
-    return this;
-  }
-
-  /**
-   * @return The textRange
-   */
-  @JsonProperty("textRange")
-  public TextRange getTextRange() {
-    return textRange;
-  }
-
-  /**
-   * @param textRange The textRange
-   */
-  @JsonProperty("textRange")
-  public void setTextRange(TextRange textRange) {
-    this.textRange = textRange;
-  }
-
-  public Issue withTextRange(TextRange textRange) {
-    this.textRange = textRange;
-    return this;
-  }
-
-  /**
-   * @return The flows
-   */
-  @JsonProperty("flows")
-  public List<Object> getFlows() {
-    return flows;
-  }
-
-  /**
-   * @param flows The flows
-   */
-  @JsonProperty("flows")
-  public void setFlows(List<Object> flows) {
-    this.flows = flows;
-  }
-
-  public Issue withFlows(List<Object> flows) {
-    this.flows = flows;
     return this;
   }
 
@@ -283,27 +205,6 @@ public class Issue {
   }
 
   /**
-   * @return The message
-   */
-  @JsonProperty("message")
-  public String getMessage() {
-    return message;
-  }
-
-  /**
-   * @param message The message
-   */
-  @JsonProperty("message")
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public Issue withMessage(String message) {
-    this.message = message;
-    return this;
-  }
-
-  /**
    * @return The debt
    */
   @JsonProperty("debt")
@@ -342,27 +243,6 @@ public class Issue {
 
   public Issue withAuthor(String author) {
     this.author = author;
-    return this;
-  }
-
-  /**
-   * @return The tags
-   */
-  @JsonProperty("tags")
-  public List<String> getTags() {
-    return tags;
-  }
-
-  /**
-   * @param tags The tags
-   */
-  @JsonProperty("tags")
-  public void setTags(List<String> tags) {
-    this.tags = tags;
-  }
-
-  public Issue withTags(List<String> tags) {
-    this.tags = tags;
     return this;
   }
 
@@ -429,45 +309,9 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The line
-   */
-  @JsonProperty("line")
-  public Integer getLine() {
-    return line;
-  }
-
-  /**
-   * @param line The line
-   */
-  @JsonProperty("line")
-  public void setLine(Integer line) {
-    this.line = line;
-  }
-
-  public Issue withLine(Integer line) {
-    this.line = line;
-    return this;
-  }
-
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
-  }
-
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
-  public Issue withAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-    return this;
   }
 
   @Override
@@ -480,7 +324,7 @@ public class Issue {
 
     return new EqualsBuilder()
       .append(key, issue.key)
-      .append(component, issue.component)
+      .append(componentId, issue.componentId)
       .append(status, issue.status)
       .isEquals();
   }
@@ -489,7 +333,7 @@ public class Issue {
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
       .append(key)
-      .append(component)
+      .append(componentId)
       .append(status)
       .toHashCode();
   }

@@ -29,6 +29,8 @@ public class QubooProperties {
 
   public static final String ACCESS_KEY = "sonar.quboo.access-key";
   public static final String SECRET_KEY = "sonar.quboo.secret-key";
+  public static final String DEFAULT_ACCESS_KEY = "your-access-key";
+  public static final String DEFAULT_SECRET_KEY = "your-secret-key";
   public static final String CATEGORY = "Quboo";
 
   private QubooProperties() {
@@ -40,13 +42,13 @@ public class QubooProperties {
       PropertyDefinition.builder(ACCESS_KEY)
         .name("Quboo Access Key")
         .description("Your organization account access key to export report summary to Quboo")
-        .defaultValue("your-access-key")
+        .defaultValue(DEFAULT_ACCESS_KEY)
         .category(CATEGORY)
         .build(),
       PropertyDefinition.builder(SECRET_KEY)
         .name("Quboo Secret Key")
         .description("Your organization account secret key to export report summary to Quboo")
-        .defaultValue("your-secret-key")
+        .defaultValue(DEFAULT_SECRET_KEY)
         .category(CATEGORY)
         .build()
     );
