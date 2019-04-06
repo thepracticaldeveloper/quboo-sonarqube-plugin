@@ -4,7 +4,7 @@
 
 [Quboo](https://quboo.io) is a platform that helps you improve your code by using gamification techniques to motivate you and your peers to fix your technical debt.
 
-Go to [quboo.io](https://quboo.io) for more details about how Quboo works and why you should give it a try.
+Go to [quboo.io](https://quboo.io) for more details about how Quboo works and give it a try.
 
 # The plugin
 
