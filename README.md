@@ -24,7 +24,7 @@ This plugin runs after each analysis and collect partial information about your 
 
 After you install the plugin you need Administrator rights to enter your Quboo Access and Secret Keys. The plugin needs these so it can link the data to your account. You can find these values under the section *Settings* when you log in as a user in Quboo.
 
-In SonarQube, you have to enter these keys in the section *Administration -> Configuration -> General Settings -> Quboo (tab)*. 
+In SonarQube, you have to enter these keys in the section *Administration -> Configuration -> General Settings -> Quboo (tab on the left)*. 
 
 ## What information do we send?
 
