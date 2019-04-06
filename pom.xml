@@ -11,6 +11,22 @@
   <name>Quboo Plugin for SonarQube</name>
   <description>This plugin exports analysis result summaries to your Quboo organization account.</description>
 
+  <licenses>
+    <license>
+      <name>GNU LGPL 3</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>mechero</id>
+      <name>Moisés Macero</name>
+      <organization>The Practical Developer</organization>
+    </developer>
+  </developers>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.apiVersion>6.7.1</sonar.apiVersion>
@@ -84,6 +100,16 @@
         <configuration>
           <pluginKey>quboo</pluginKey>
           <pluginClass>io.tpd.quboo.sonarplugin.QubooPlugin</pluginClass>
+          <pluginName>Quboo</pluginName>
+          <pluginDescription>Provides integration with Quboo to use Gamification techniques to fix your legacy code.
+          </pluginDescription>
+          <pluginUrl>https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin</pluginUrl>
+          <pluginOrganizationUrl>https://quboo.io</pluginOrganizationUrl>
+          <pluginIssueTrackerUrl>https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/issues
+          </pluginIssueTrackerUrl>
+          <pluginTermsConditionsUrl>https://quboo.io/terms</pluginTermsConditionsUrl>
+          <pluginOrganizationName>Quboo</pluginOrganizationName>
+          <pluginDisplayVersion>1.0</pluginDisplayVersion>
         </configuration>
       </plugin>
       <plugin>

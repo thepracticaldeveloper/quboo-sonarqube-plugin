@@ -74,7 +74,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
       final Response response = http.newCall(request).execute();
       final String body = response.body().string();
       final Issues issues = mapper.readValue(body, Issues.class);
-      wrapper.filterAndAddIssues(issues);
+      wrapper.filterAndAddIssues(issues, server.getVersion());
       moreData = moreData(issues.getPaging(), issues.getIssues().size());
       pageNumber++;
     }
@@ -104,7 +104,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
         final Response response = http.newCall(request).execute();
         final String body = response.body().string();
         final Users users = mapper.readValue(body, Users.class);
-        wrapper.filterAndAddUsers(users);
+        wrapper.filterAndAddUsers(users, server.getVersion());
         moreData = moreData(users.getPaging(), users.getUsers().size());
         pageNumber++;
       } catch (final Exception e) {

@@ -6,21 +6,34 @@ import io.tpd.quboo.sonarplugin.pojos.Users;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.tpd.quboo.sonarplugin.QubooPlugin.QUBOO_PLUGIN_VERSION;
+
 public class UsersWrapper {
 
   private List<User> users;
+  private String version = QUBOO_PLUGIN_VERSION;
+  private String sonarVersion;
 
   public UsersWrapper() {
     this.users = new ArrayList<>();
   }
 
-  public void filterAndAddUsers(final Users users) {
+  public void filterAndAddUsers(final Users users, final String sonarVersion) {
     this.users.addAll(
       users.getUsers()
     );
+    this.sonarVersion = sonarVersion;
   }
 
   public List<User> getUsers() {
     return users;
+  }
+
+  public String getVersion() {
+    return version;
+  }
+
+  public String getSonarVersion() {
+    return sonarVersion;
   }
 }

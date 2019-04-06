@@ -34,3 +34,7 @@ We do not need much information for you to play the game, so we collect only som
 - **Issues**: key, rule, severity, componentId, resolution, status, debt, author, creationDate, updateDate, closeDate.
 
 As you can see, **we DO NOT send anything related to code to the server**. Not even your component names, tags, comments, etc. 
+
+## Quboo: Terms and Conditions
+
+You can read the complete [terms and conditions](https://quboo.io/terms) at the Quboo Website.
