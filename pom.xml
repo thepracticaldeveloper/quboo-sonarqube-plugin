@@ -6,7 +6,7 @@
   <groupId>com.thepracticaldeveloper</groupId>
   <artifactId>quboo-sonar-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <name>Quboo Plugin for SonarQube</name>
   <description>This plugin exports analysis result summaries to your Quboo organization account.</description>
@@ -150,6 +150,7 @@
           <useReleaseProfile>false</useReleaseProfile>
           <releaseProfiles>release</releaseProfiles>
           <goals>deploy</goals>
+          <tagNameFormat>v@{project.version}</tagNameFormat>
         </configuration>
       </plugin>
     </plugins>
