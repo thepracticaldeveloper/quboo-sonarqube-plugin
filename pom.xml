@@ -29,7 +29,7 @@
 
   <scm>
     <connection>scm:git:git://github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git</connection>
-    <developerConnection>scm:git:ssh://github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git</developerConnection>
     <url>https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/tree/master</url>
     <tag>HEAD</tag>
   </scm>
