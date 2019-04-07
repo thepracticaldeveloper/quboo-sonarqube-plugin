@@ -16,7 +16,7 @@ This plugin runs after each analysis and collect partial information about your 
 
 ## Installing the Plugin
 
-1. Navigate to [Releases](https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/releases) and download the latest `.jar` file.
+1. Navigate to [Releases](https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/releases/latest) and download the latest `.jar` file.
 2. Remove any previous version of the plugin and put the new jar in the folder `$SONARQUBE_HOME/extensions/plugins`.
 3. Restart your SonarQube server.
 
