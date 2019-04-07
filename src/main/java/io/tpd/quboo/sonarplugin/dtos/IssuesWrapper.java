@@ -6,12 +6,12 @@ import io.tpd.quboo.sonarplugin.pojos.Issues;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.tpd.quboo.sonarplugin.QubooPlugin.QUBOO_PLUGIN_VERSION;
+import static io.tpd.quboo.sonarplugin.QubooPlugin.QUBOO_API_VERSION;
 
 public class IssuesWrapper {
 
   private List<Issue> issues;
-  private String version = QUBOO_PLUGIN_VERSION;
+  private String version = QUBOO_API_VERSION;
   private String sonarVersion;
 
   public IssuesWrapper() {
