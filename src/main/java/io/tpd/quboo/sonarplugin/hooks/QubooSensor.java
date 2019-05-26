@@ -22,8 +22,10 @@ public class QubooSensor implements Sensor {
   public void execute(final SensorContext context) {
     final Optional<String> key = context.config().get(QubooProperties.ACCESS_KEY);
     final Optional<String> secret = context.config().get(QubooProperties.SECRET_KEY);
+    final Optional<String> token = context.config().get(QubooProperties.TOKEN_KEY);
     key.ifPresent(accessKey -> context.addContextProperty(QubooProperties.ACCESS_KEY, accessKey));
     secret.ifPresent(s -> context.addContextProperty(QubooProperties.SECRET_KEY, s));
-    log.info("Access key is "+key.orElse("NOT PRESENT"));
+    token.ifPresent(s -> context.addContextProperty(QubooProperties.TOKEN_KEY, s));
+    log.info("Access key is " + key.orElse("NOT PRESENT"));
   }
 }

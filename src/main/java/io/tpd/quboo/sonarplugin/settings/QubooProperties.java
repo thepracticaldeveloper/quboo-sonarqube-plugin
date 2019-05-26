@@ -19,6 +19,7 @@
  */
 package io.tpd.quboo.sonarplugin.settings;
 
+import org.sonar.api.PropertyType;
 import org.sonar.api.config.PropertyDefinition;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class QubooProperties {
 
   public static final String ACCESS_KEY = "sonar.quboo.access-key";
   public static final String SECRET_KEY = "sonar.quboo.secret-key";
+  public static final String TOKEN_KEY = "sonar.quboo.token";
   public static final String DEFAULT_ACCESS_KEY = "your-access-key";
   public static final String DEFAULT_SECRET_KEY = "your-secret-key";
   public static final String CATEGORY = "Quboo";
@@ -44,12 +46,22 @@ public class QubooProperties {
         .description("Your organization account access key to export report summary to Quboo")
         .defaultValue(DEFAULT_ACCESS_KEY)
         .category(CATEGORY)
+        .index(1)
         .build(),
       PropertyDefinition.builder(SECRET_KEY)
         .name("Quboo Secret Key")
         .description("Your organization account secret key to export report summary to Quboo")
         .defaultValue(DEFAULT_SECRET_KEY)
         .category(CATEGORY)
+        .index(2)
+        .build(),
+      PropertyDefinition.builder(TOKEN_KEY)
+        .name("API Token")
+        .description("You need to enter a valid API token if your SonarQube server requires authentication")
+        .defaultValue("")
+        .category(CATEGORY)
+        .type(PropertyType.PASSWORD)
+        .index(3)
         .build()
     );
   }
