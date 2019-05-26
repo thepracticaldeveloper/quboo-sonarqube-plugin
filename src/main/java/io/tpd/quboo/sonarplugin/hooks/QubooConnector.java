@@ -10,13 +10,15 @@ import io.tpd.quboo.sonarplugin.pojos.Paging;
 import io.tpd.quboo.sonarplugin.pojos.Users;
 import io.tpd.quboo.sonarplugin.settings.QubooProperties;
 import okhttp3.*;
-import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
 import org.sonar.api.platform.Server;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
+import java.util.Base64;
+
 import static io.tpd.quboo.sonarplugin.settings.QubooProperties.DEFAULT_ACCESS_KEY;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  * Sends stats to the Quboo server after an analysis
@@ -38,12 +40,16 @@ public class QubooConnector implements PostProjectAnalysisTask {
   public void finished(ProjectAnalysis analysis) {
     final String qubooKey = analysis.getScannerContext().getProperties().get(QubooProperties.ACCESS_KEY);
     final String qubooSecret = analysis.getScannerContext().getProperties().get(QubooProperties.SECRET_KEY);
-    if (!StringUtils.isEmpty(qubooKey) && !DEFAULT_ACCESS_KEY.equals(qubooKey)) {
+    final String token = analysis.getScannerContext().getProperties().get(QubooProperties.TOKEN_KEY);
+    if (!isEmpty(token)) {
+      log.info("A token will be used to connect to SonarQube server");
+    }
+    if (!isEmpty(qubooKey) && !DEFAULT_ACCESS_KEY.equals(qubooKey)) {
       log.info("Connecting to Quboo with quboo key: " + qubooKey);
       try {
-        final UsersWrapper allUsers = getUsers();
+        final UsersWrapper allUsers = getUsers(token);
         sendUsersToQuboo(allUsers, qubooKey, qubooSecret);
-        final IssuesWrapper allIssues = getIssues();
+        final IssuesWrapper allIssues = getIssues(token);
         sendIssuesToQuboo(allIssues, qubooKey, qubooSecret);
       } catch (final Exception e) {
         log.error("Error while trying to connect to Quboo", e);
@@ -65,13 +71,15 @@ public class QubooConnector implements PostProjectAnalysisTask {
     log.info("Response " + response.code() + " | " + body);
   }
 
-  private IssuesWrapper getIssues() throws Exception {
+  private IssuesWrapper getIssues(final String token) throws Exception {
     int pageNumber = 1;
     boolean moreData = true;
     IssuesWrapper wrapper = new IssuesWrapper();
     while (moreData) {
-      final Request request = new Request.Builder().url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&ps=200&p=" + pageNumber).get().build();
-      final Response response = http.newCall(request).execute();
+      final Request.Builder request = new Request.Builder()
+        .url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&ps=200&p=" + pageNumber).get();
+      addAuthorizationIfNeeded(request, token);
+      final Response response = http.newCall(request.build()).execute();
       final String body = response.body().string();
       final Issues issues = mapper.readValue(body, Issues.class);
       wrapper.filterAndAddIssues(issues, server.getVersion());
@@ -94,14 +102,15 @@ public class QubooConnector implements PostProjectAnalysisTask {
     log.info("Response " + response.code() + " | " + body);
   }
 
-  private UsersWrapper getUsers() {
+  private UsersWrapper getUsers(final String token) {
     int pageNumber = 1;
     boolean moreData = true;
     UsersWrapper wrapper = new UsersWrapper();
     while (moreData) {
       try {
-        final Request request = new Request.Builder().url(server.getPublicRootUrl() + "/api/users/search?ps=200&p=" + pageNumber).get().build();
-        final Response response = http.newCall(request).execute();
+        final Request.Builder request = new Request.Builder().url(server.getPublicRootUrl() + "/api/users/search?ps=200&p=" + pageNumber).get();
+        addAuthorizationIfNeeded(request, token);
+        final Response response = http.newCall(request.build()).execute();
         final String body = response.body().string();
         final Users users = mapper.readValue(body, Users.class);
         wrapper.filterAndAddUsers(users, server.getVersion());
@@ -118,6 +127,14 @@ public class QubooConnector implements PostProjectAnalysisTask {
 
   private boolean moreData(final Paging paging, final int elementsInPage) {
     return elementsInPage == paging.getPageSize() && paging.getTotal() > paging.getPageSize() * paging.getPageIndex();
+  }
+
+  private Request.Builder addAuthorizationIfNeeded(final Request.Builder requestBuilder, final String token) {
+    if (!isEmpty(token)) {
+      final String headerValue = "Basic " + Base64.getEncoder().encodeToString((token + ":").getBytes());
+      requestBuilder.header("Authorization", headerValue);
+    }
+    return requestBuilder;
   }
 
 }
