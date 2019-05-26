@@ -26,6 +26,12 @@ After you install the plugin you need Administrator rights to enter your Quboo A
 
 In SonarQube, you have to enter these keys in the section *Administration -> Configuration -> General Settings -> Quboo (tab on the left)*. 
 
+### Servers with "Force User Authentication" enabled
+
+If your SonarQube server has the property `sonar.forceAuthentication` enabled, the Quboo Plugin can't access the API without a valid _token_. First, generate a token in SonarQube from 'My Account' -> 'Security'. Then, enter the token value in the Quboo Plugin configuration section.
+
+Remember: you **don't** need to provide a token if your server allows anonymous access.
+
 ## What information do we send?
 
 We do not need much information for you to play the game, so we collect only some details from Users and Issues. We keep this plugin in an open source repository for transparency so you can see at anytime what is the transferred data:
