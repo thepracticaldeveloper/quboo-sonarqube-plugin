@@ -31,7 +31,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
   private final OkHttpClient http;
 
   public QubooConnector(final Server server) {
-    this.http = HttpClients.getUnsafeOkHttpClient();
+    this.http = new HttpClients().getQubooTrustedOkHttpClient();
     this.server = server;
     this.mapper = new ObjectMapper();
   }

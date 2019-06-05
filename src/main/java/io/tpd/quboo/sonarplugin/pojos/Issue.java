@@ -3,33 +3,12 @@ package io.tpd.quboo.sonarplugin.pojos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({
-  "key",
-  "rule",
-  "severity",
-  "component",
-  "componentId",
-  "project",
-  "textRange",
-  "flows",
-  "resolution",
-  "status",
-  "message",
-  "debt",
-  "author",
-  "tags",
-  "creationDate",
-  "updateDate",
-  "closeDate",
-  "line"
-})
 public class Issue {
 
   @JsonProperty("key")
@@ -56,6 +35,8 @@ public class Issue {
   private String updateDate;
   @JsonProperty("closeDate")
   private String closeDate;
+  @JsonProperty("assignee")
+  private String assignee;
 
   /**
    * @return The key
@@ -309,6 +290,21 @@ public class Issue {
     return this;
   }
 
+  @JsonProperty("assignee")
+  public String getAssignee() {
+    return assignee;
+  }
+
+  @JsonProperty("assignee")
+  public void setAssignee(String assignee) {
+    this.assignee = assignee;
+  }
+
+  public Issue withAssignee(String assignee) {
+    this.assignee = assignee;
+    return this;
+  }
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
@@ -324,6 +320,7 @@ public class Issue {
 
     return new EqualsBuilder()
       .append(key, issue.key)
+      .append(assignee, issue.assignee)
       .append(componentId, issue.componentId)
       .append(status, issue.status)
       .isEquals();
@@ -332,6 +329,7 @@ public class Issue {
   @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
+      .append(assignee)
       .append(key)
       .append(componentId)
       .append(status)
