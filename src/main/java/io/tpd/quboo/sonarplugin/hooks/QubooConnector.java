@@ -11,6 +11,7 @@ import io.tpd.quboo.sonarplugin.pojos.Users;
 import io.tpd.quboo.sonarplugin.settings.QubooProperties;
 import okhttp3.*;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
+import org.sonar.api.internal.google.common.annotations.VisibleForTesting;
 import org.sonar.api.platform.Server;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -28,12 +29,17 @@ public class QubooConnector implements PostProjectAnalysisTask {
   private final Server server;
   private final Logger log = Loggers.get(getClass());
   private final ObjectMapper mapper;
-  private final OkHttpClient http;
+  private OkHttpClient http;
 
   public QubooConnector(final Server server) {
     this.http = new HttpClients().getQubooTrustedOkHttpClient();
     this.server = server;
     this.mapper = new ObjectMapper();
+  }
+
+  @VisibleForTesting
+  void setHttp(final OkHttpClient http) {
+    this.http = http;
   }
 
   @Override
@@ -108,7 +114,9 @@ public class QubooConnector implements PostProjectAnalysisTask {
     UsersWrapper wrapper = new UsersWrapper();
     while (moreData) {
       try {
-        final Request.Builder request = new Request.Builder().url(server.getPublicRootUrl() + "/api/users/search?ps=200&p=" + pageNumber).get();
+        final Request.Builder request = new Request.Builder()
+          .url(server.getPublicRootUrl() + "/api/users/search?ps=200&p=" + pageNumber)
+          .get();
         addAuthorizationIfNeeded(request, token);
         final Response response = http.newCall(request.build()).execute();
         final String body = response.body().string();
