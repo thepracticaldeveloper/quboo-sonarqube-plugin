@@ -55,7 +55,7 @@ public class QubooConnectorTest {
   }
 
   @Test
-  public void testHappyFlow() throws IOException {
+  public void testSendUsersAndIssues() throws IOException {
     // Given
     given(projectAnalysis.getScannerContext().getProperties()).willReturn(fullPropertiesMap());
     final Response okResponse1 = build200Response("OK", "text/plain");
