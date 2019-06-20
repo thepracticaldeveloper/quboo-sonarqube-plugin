@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.thepracticaldeveloper</groupId>
   <artifactId>quboo-sonar-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.0.6-SNAPSHOT</version>
+  <version>1.0.5</version>
 
   <name>Quboo Plugin for SonarQube</name>
   <description>This plugin exports analysis result summaries to your Quboo organization account.</description>
@@ -27,7 +28,8 @@
   </developers>
 
   <scm>
-    <developerConnection>scm:git:ssh://git@github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git
+    </developerConnection>
     <url>https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/tree/master</url>
     <tag>HEAD</tag>
   </scm>
@@ -38,6 +40,7 @@
     <jdk.min.version>1.8</jdk.min.version>
     <sonar.sources>src/main/java</sonar.sources>
     <jackson.version>2.9.8</jackson.version>
+    <sonar.exclusions>**/pojos/*.java</sonar.exclusions>
   </properties>
 
   <dependencies>
@@ -163,6 +166,26 @@
           <goals>deploy</goals>
           <tagNameFormat>v@{project.version}</tagNameFormat>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.4</version>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
