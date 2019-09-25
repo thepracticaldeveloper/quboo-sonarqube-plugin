@@ -85,9 +85,12 @@ public class QubooConnector implements PostProjectAnalysisTask {
       final Request.Builder request = new Request.Builder()
         .url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&ps=200&p=" + pageNumber).get();
       addAuthorizationIfNeeded(request, token);
-      final Response response = http.newCall(request.build()).execute();
+      final Request r = request.build();
+      log.info("Quboo plugin getting issues from {}", r.url().toString());
+      final Response response = http.newCall(r).execute();
       final String body = response.body().string();
       final Issues issues = mapper.readValue(body, Issues.class);
+      log.info("Quboo plugin got {} issues", issues.getIssues().size());
       wrapper.filterAndAddIssues(issues, server.getVersion());
       moreData = moreData(issues.getPaging(), issues.getIssues().size());
       pageNumber++;
@@ -103,6 +106,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
       .header(QubooPlugin.QUBOO_HEADER_SECRET_KEY, qubooSecret)
       .post(RequestBody.create(MediaType.get("application/json"), mapper.writeValueAsString(allUsers)))
       .build();
+    log.info("Sending users to Quboo, url: {}", request.url().toString());
     final Response response = http.newCall(request).execute();
     final String body = response.body().string();
     log.info("Response " + response.code() + " | " + body);
@@ -118,9 +122,12 @@ public class QubooConnector implements PostProjectAnalysisTask {
           .url(server.getPublicRootUrl() + "/api/users/search?ps=200&p=" + pageNumber)
           .get();
         addAuthorizationIfNeeded(request, token);
-        final Response response = http.newCall(request.build()).execute();
+        final Request r = request.build();
+        log.info("Quboo plugin getting users from {}", r.url().toString());
+        final Response response = http.newCall(r).execute();
         final String body = response.body().string();
         final Users users = mapper.readValue(body, Users.class);
+        log.info("Quboo plugin got {} users", users.getUsers().size());
         wrapper.filterAndAddUsers(users, server.getVersion());
         moreData = moreData(users.getPaging(), users.getUsers().size());
         pageNumber++;
@@ -141,6 +148,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
     if (!isEmpty(token)) {
       final String headerValue = "Basic " + Base64.getEncoder().encodeToString((token + ":").getBytes());
       requestBuilder.header("Authorization", headerValue);
+      log.info("Adding Authorization header to request with token ****{}", token.substring(token.length()/2));
     }
     return requestBuilder;
   }
