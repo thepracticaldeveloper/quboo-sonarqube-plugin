@@ -39,7 +39,7 @@
     <sonar.apiVersion>6.7.1</sonar.apiVersion>
     <jdk.min.version>1.8</jdk.min.version>
     <sonar.sources>src/main/java</sonar.sources>
-    <jackson.version>2.9.8</jackson.version>
+    <jackson.version>2.10.0</jackson.version>
     <sonar.exclusions>**/pojos/*.java</sonar.exclusions>
   </properties>
 
