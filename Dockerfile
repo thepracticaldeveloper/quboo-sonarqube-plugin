@@ -1,2 +1,2 @@
-FROM sonarqube:7.1
-ADD  ./target/quboo-sonar-plugin-1.0.0.jar /opt/sonarqube/extensions/plugins/quboo-sonar-plugin.jar
+FROM sonarqube:7.9-community
+ADD  ./target/quboo-sonar-plugin*.jar /opt/sonarqube/extensions/plugins/quboo-sonar-plugin.jar

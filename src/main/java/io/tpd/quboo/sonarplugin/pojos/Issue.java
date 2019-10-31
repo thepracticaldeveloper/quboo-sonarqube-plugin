@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
@@ -37,18 +39,16 @@ public class Issue {
   private String closeDate;
   @JsonProperty("assignee")
   private String assignee;
+  @JsonProperty("type")
+  private String type;
+  @JsonProperty("tags")
+  private List<String> tags;
 
-  /**
-   * @return The key
-   */
   @JsonProperty("key")
   public String getKey() {
     return key;
   }
 
-  /**
-   * @param key The key
-   */
   @JsonProperty("key")
   public void setKey(String key) {
     this.key = key;
@@ -59,17 +59,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The rule
-   */
   @JsonProperty("rule")
   public String getRule() {
     return rule;
   }
 
-  /**
-   * @param rule The rule
-   */
   @JsonProperty("rule")
   public void setRule(String rule) {
     this.rule = rule;
@@ -80,17 +74,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The severity
-   */
   @JsonProperty("severity")
   public String getSeverity() {
     return severity;
   }
 
-  /**
-   * @param severity The severity
-   */
   @JsonProperty("severity")
   public void setSeverity(String severity) {
     this.severity = severity;
@@ -101,17 +89,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The componentId
-   */
   @JsonProperty("componentId")
   public Integer getComponentId() {
     return componentId;
   }
 
-  /**
-   * @param componentId The componentId
-   */
   @JsonProperty("componentId")
   public void setComponentId(Integer componentId) {
     this.componentId = componentId;
@@ -122,17 +104,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The project
-   */
   @JsonProperty("project")
   public String getProject() {
     return project;
   }
 
-  /**
-   * @param project The project
-   */
   @JsonProperty("project")
   public void setProject(String project) {
     this.project = project;
@@ -143,17 +119,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The resolution
-   */
   @JsonProperty("resolution")
   public String getResolution() {
     return resolution;
   }
 
-  /**
-   * @param resolution The resolution
-   */
   @JsonProperty("resolution")
   public void setResolution(String resolution) {
     this.resolution = resolution;
@@ -164,17 +134,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The status
-   */
   @JsonProperty("status")
   public String getStatus() {
     return status;
   }
 
-  /**
-   * @param status The status
-   */
   @JsonProperty("status")
   public void setStatus(String status) {
     this.status = status;
@@ -185,17 +149,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The debt
-   */
   @JsonProperty("debt")
   public String getDebt() {
     return debt;
   }
 
-  /**
-   * @param debt The debt
-   */
   @JsonProperty("debt")
   public void setDebt(String debt) {
     this.debt = debt;
@@ -206,17 +164,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The author
-   */
   @JsonProperty("author")
   public String getAuthor() {
     return author;
   }
 
-  /**
-   * @param author The author
-   */
   @JsonProperty("author")
   public void setAuthor(String author) {
     this.author = author;
@@ -227,17 +179,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The creationDate
-   */
   @JsonProperty("creationDate")
   public String getCreationDate() {
     return creationDate;
   }
 
-  /**
-   * @param creationDate The creationDate
-   */
   @JsonProperty("creationDate")
   public void setCreationDate(String creationDate) {
     this.creationDate = creationDate;
@@ -248,17 +194,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The updateDate
-   */
   @JsonProperty("updateDate")
   public String getUpdateDate() {
     return updateDate;
   }
 
-  /**
-   * @param updateDate The updateDate
-   */
   @JsonProperty("updateDate")
   public void setUpdateDate(String updateDate) {
     this.updateDate = updateDate;
@@ -269,17 +209,11 @@ public class Issue {
     return this;
   }
 
-  /**
-   * @return The closeDate
-   */
   @JsonProperty("closeDate")
   public String getCloseDate() {
     return closeDate;
   }
 
-  /**
-   * @param closeDate The closeDate
-   */
   @JsonProperty("closeDate")
   public void setCloseDate(String closeDate) {
     this.closeDate = closeDate;
@@ -302,6 +236,36 @@ public class Issue {
 
   public Issue withAssignee(String assignee) {
     this.assignee = assignee;
+    return this;
+  }
+
+  @JsonProperty("type")
+  public String getType() {
+    return type;
+  }
+
+  @JsonProperty("type")
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public Issue withType(String type) {
+    this.type = type;
+    return this;
+  }
+
+  @JsonProperty("tags")
+  public List<String> getTags() {
+    return tags;
+  }
+
+  @JsonProperty("tags")
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
+
+  public Issue withTags(List<String> tags) {
+    this.tags = tags;
     return this;
   }
 

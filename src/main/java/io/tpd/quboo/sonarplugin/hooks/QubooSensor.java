@@ -26,6 +26,10 @@ public class QubooSensor implements Sensor {
     key.ifPresent(accessKey -> context.addContextProperty(QubooProperties.ACCESS_KEY, accessKey));
     secret.ifPresent(s -> context.addContextProperty(QubooProperties.SECRET_KEY, s));
     token.ifPresent(s -> context.addContextProperty(QubooProperties.TOKEN_KEY, s));
-    log.info("Access key is " + key.orElse("NOT PRESENT"));
+    if (key.isPresent() && key.get().equals(QubooProperties.DEFAULT_ACCESS_KEY)) {
+      log.warn("WARNING: Quboo will ignore this analysis because you haven't set the Quboo Access (and Secret) Keys. Go to your Sonarqube server (as admin), Administration -> Configuration -> Quboo and enter the values you find in your Quboo account settings.");
+    } else {
+      log.info("Access key is " + key.orElse("NOT PRESENT"));
+    }
   }
 }

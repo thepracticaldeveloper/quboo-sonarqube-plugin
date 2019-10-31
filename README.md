@@ -37,9 +37,9 @@ Remember: you **don't** need to provide a token if your server allows anonymous 
 We do not need much information for you to play the game, so we collect only some details from Users and Issues. We keep this plugin in an open source repository for transparency so you can see at anytime what is the transferred data:
 
 - **Users**: login, name, active.
-- **Issues**: key, rule, severity, componentId, resolution, status, debt, author, creationDate, updateDate, closeDate.
+- **Issues**: key, rule, severity, componentId, resolution, status, debt, author, creationDate, updateDate, closeDate, type, tags.
 
-As you can see, **we DO NOT send anything related to code to the server**. Not even your component names, tags, comments, etc. 
+As you can see, **we DO NOT send anything related to code to the server**. Not even your component names or comments.
 
 ## Quboo: Terms and Conditions
 

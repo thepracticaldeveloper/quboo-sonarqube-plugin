@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tpd.quboo.sonarplugin.pojos.*;
 import io.tpd.quboo.sonarplugin.settings.QubooProperties;
 import okhttp3.*;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -107,7 +108,7 @@ public class QubooConnectorTest {
   private Issues generateIssuesPage1() {
     final Issue issue1 = new Issue().withAssignee("player1").withResolution("open").withDebt("1h")
       .withRule("InsufficientCoverage").withKey("issue-1").withProject("project").withAuthor("author")
-      .withSeverity("major").withStatus("open");
+      .withSeverity("major").withStatus("open").withType("VULNERABILITY").withTags(Lists.list("tag"));
     final Issue issue2 = new Issue().withAssignee("player2").withResolution("closed").withDebt("1h")
       .withRule("InsufficientCoverage").withKey("issue-2").withProject("project").withAuthor("author")
       .withSeverity("major").withStatus("fixed");
@@ -118,7 +119,7 @@ public class QubooConnectorTest {
   private Issues generateIssuesPage2() {
     final Issue issue1 = new Issue().withAssignee("player1").withResolution("open").withDebt("1h")
       .withRule("InsufficientCoverage").withKey("issue-3").withProject("project").withAuthor("author")
-      .withSeverity("major").withStatus("open");
+      .withSeverity("major").withStatus("open").withType("RELIABILITY").withTags(Lists.list("tag"));
     final Paging paging = new Paging().withPageIndex(2).withPageSize(2).withTotal(3);
     return new Issues().withIssues(Collections.singletonList(issue1)).withPaging(paging);
   }

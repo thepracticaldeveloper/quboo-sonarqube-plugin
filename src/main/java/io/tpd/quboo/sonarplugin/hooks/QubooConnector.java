@@ -148,7 +148,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
     if (!isEmpty(token)) {
       final String headerValue = "Basic " + Base64.getEncoder().encodeToString((token + ":").getBytes());
       requestBuilder.header("Authorization", headerValue);
-      log.info("Adding Authorization header to request with token ****{}", token.substring(token.length()/2));
+      log.info("Adding Authorization header to request with token ****{}", token.substring(3*token.length()/4));
     }
     return requestBuilder;
   }

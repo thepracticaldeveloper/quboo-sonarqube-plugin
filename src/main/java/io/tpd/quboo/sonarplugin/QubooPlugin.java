@@ -13,7 +13,7 @@ public class QubooPlugin implements Plugin {
   public static final String QUBOO_SERVER = "https://api.quboo.io";
   public static final String QUBOO_HEADER_ACCESS_KEY = "x-quboo-access-key";
   public static final String QUBOO_HEADER_SECRET_KEY = "x-quboo-secret-key";
-  public static final String QUBOO_API_VERSION = "v1.0";
+  public static final String QUBOO_API_VERSION = "v1.1";
 
   @Override
   public void define(Context context) {
