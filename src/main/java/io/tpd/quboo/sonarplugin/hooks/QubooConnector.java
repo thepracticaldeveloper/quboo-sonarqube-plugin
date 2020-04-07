@@ -11,7 +11,6 @@ import io.tpd.quboo.sonarplugin.pojos.Users;
 import io.tpd.quboo.sonarplugin.settings.QubooProperties;
 import okhttp3.*;
 import org.sonar.api.ce.posttask.PostProjectAnalysisTask;
-import org.sonar.api.internal.google.common.annotations.VisibleForTesting;
 import org.sonar.api.platform.Server;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -37,9 +36,12 @@ public class QubooConnector implements PostProjectAnalysisTask {
     this.mapper = new ObjectMapper();
   }
 
-  @VisibleForTesting
   void setHttp(final OkHttpClient http) {
     this.http = http;
+  }
+
+  public String getDescription() {
+    return "Send statistics to Quboo after an analysis";
   }
 
   @Override
@@ -148,7 +150,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
     if (!isEmpty(token)) {
       final String headerValue = "Basic " + Base64.getEncoder().encodeToString((token + ":").getBytes());
       requestBuilder.header("Authorization", headerValue);
-      log.info("Adding Authorization header to request with token ****{}", token.substring(3*token.length()/4));
+      log.info("Adding Authorization header to request with token ****{}", token.substring(3 * token.length() / 4));
     }
     return requestBuilder;
   }
