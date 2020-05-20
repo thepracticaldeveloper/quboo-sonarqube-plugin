@@ -5,7 +5,7 @@
   <groupId>com.thepracticaldeveloper</groupId>
   <artifactId>quboo-sonar-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.2.0</version>
 
   <name>Quboo Plugin for SonarQube</name>
   <description>This plugin exports analysis result summaries to your Quboo organization account.</description>
@@ -30,7 +30,7 @@
     <developerConnection>scm:git:ssh://git@github.com/thepracticaldeveloper/quboo-sonarqube-plugin.git
     </developerConnection>
     <url>https://github.com/thepracticaldeveloper/quboo-sonarqube-plugin/tree/master</url>
-    <tag>HEAD</tag>
+    <tag>v1.2.0</tag>
   </scm>
 
   <properties>
