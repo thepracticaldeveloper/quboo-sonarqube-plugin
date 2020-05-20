@@ -2,9 +2,11 @@ package io.tpd.quboo.sonarplugin.dtos;
 
 import io.tpd.quboo.sonarplugin.pojos.User;
 import io.tpd.quboo.sonarplugin.pojos.Users;
+import io.tpd.quboo.sonarplugin.util.QubooCache;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.tpd.quboo.sonarplugin.QubooPlugin.QUBOO_API_VERSION;
 
@@ -20,7 +22,8 @@ public class UsersWrapper {
 
   public void filterAndAddUsers(final Users users, final String sonarVersion) {
     this.users.addAll(
-      users.getUsers()
+      users.getUsers().stream().filter(user -> !QubooCache.INSTANCE.inCache(user))
+        .collect(Collectors.toList())
     );
     this.sonarVersion = sonarVersion;
   }
