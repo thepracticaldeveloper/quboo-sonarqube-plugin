@@ -15,9 +15,10 @@ public class QubooPropertiesTest {
   public void allPropertiesConfigured() {
     final List<PropertyDefinition> properties = QubooProperties.getProperties();
 
-    assertThat(properties.size()).isEqualTo(3);
+    assertThat(properties.size()).isEqualTo(5);
     assertThat(properties.stream().map(PropertyDefinition::key).collect(Collectors.toList()))
-      .containsExactly(QubooProperties.ACCESS_KEY, QubooProperties.SECRET_KEY, QubooProperties.TOKEN_KEY);
+      .containsExactly(QubooProperties.ACCESS_KEY, QubooProperties.SECRET_KEY, QubooProperties.TOKEN_KEY,
+        QubooProperties.SELECTED_PROJECTS_KEY, QubooProperties.REJECTED_PROJECTS_KEY);
     assertThat(properties.get(2).type()).isEqualTo(PropertyType.PASSWORD);
   }
 }

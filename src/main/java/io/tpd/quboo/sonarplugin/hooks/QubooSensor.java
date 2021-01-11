@@ -20,16 +20,22 @@ public class QubooSensor implements Sensor {
 
   @Override
   public void execute(final SensorContext context) {
-    final Optional<String> key = context.config().get(QubooProperties.ACCESS_KEY);
-    final Optional<String> secret = context.config().get(QubooProperties.SECRET_KEY);
-    final Optional<String> token = context.config().get(QubooProperties.TOKEN_KEY);
-    key.ifPresent(accessKey -> context.addContextProperty(QubooProperties.ACCESS_KEY, accessKey));
-    secret.ifPresent(s -> context.addContextProperty(QubooProperties.SECRET_KEY, s));
-    token.ifPresent(s -> context.addContextProperty(QubooProperties.TOKEN_KEY, s));
-    if (key.isPresent() && key.get().equals(QubooProperties.DEFAULT_ACCESS_KEY)) {
+    toContextPropertyIfPresent(context, QubooProperties.ACCESS_KEY);
+    toContextPropertyIfPresent(context, QubooProperties.SECRET_KEY);
+    toContextPropertyIfPresent(context, QubooProperties.TOKEN_KEY);
+    toContextPropertyIfPresent(context, QubooProperties.SELECTED_PROJECTS_KEY);
+    toContextPropertyIfPresent(context, QubooProperties.REJECTED_PROJECTS_KEY);
+    Optional<String> accessKeyOptional = context.config().get(QubooProperties.ACCESS_KEY);
+    if (accessKeyOptional.isPresent() && accessKeyOptional.get().equals(QubooProperties.DEFAULT_ACCESS_KEY)) {
       log.warn("WARNING: Quboo will ignore this analysis because you haven't set the Quboo Access (and Secret) Keys. Go to your Sonarqube server (as admin), Administration -> Configuration -> Quboo and enter the values you find in your Quboo account settings.");
     } else {
-      log.info("Access key is " + key.orElse("NOT PRESENT"));
+      log.info("Access key is " + accessKeyOptional.orElse("NOT PRESENT"));
     }
+  }
+
+  private static void toContextPropertyIfPresent(final SensorContext context,
+                                                 final String propertyName) {
+    context.config().get(propertyName).ifPresent(p ->
+      context.addContextProperty(propertyName, p));
   }
 }
