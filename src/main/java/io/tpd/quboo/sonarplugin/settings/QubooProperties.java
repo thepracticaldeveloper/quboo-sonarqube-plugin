@@ -34,6 +34,8 @@ public class QubooProperties {
   public static final String DEFAULT_ACCESS_KEY = "your-access-key";
   public static final String DEFAULT_SECRET_KEY = "your-secret-key";
   public static final String CATEGORY = "Quboo";
+  public static final String SELECTED_PROJECTS_KEY = "sonar.quboo.selected-projects";
+  public static final String REJECTED_PROJECTS_KEY = "sonar.quboo.rejected-projects";
 
   private QubooProperties() {
     // only statics
@@ -46,6 +48,7 @@ public class QubooProperties {
         .description("Your organization account access key to export report summary to Quboo")
         .defaultValue(DEFAULT_ACCESS_KEY)
         .category(CATEGORY)
+        .subCategory("Account Keys")
         .index(1)
         .build(),
       PropertyDefinition.builder(SECRET_KEY)
@@ -53,15 +56,38 @@ public class QubooProperties {
         .description("Your organization account secret key to export report summary to Quboo")
         .defaultValue(DEFAULT_SECRET_KEY)
         .category(CATEGORY)
+        .subCategory("Account Keys")
         .index(2)
         .build(),
       PropertyDefinition.builder(TOKEN_KEY)
         .name("API Token")
         .description("You need to enter a valid API token if your SonarQube server requires authentication")
         .defaultValue("")
-        .category(CATEGORY)
+        .subCategory("Secured servers")
         .type(PropertyType.PASSWORD)
         .index(3)
+        .build(),
+      PropertyDefinition.builder(SELECTED_PROJECTS_KEY)
+        .name("Selected projects")
+        .description("If you want to select the Sonarqube projects that should be processed by Quboo, enter here" +
+          " their project names separated by commas, for example: my-project-1,my-project-2. Leave it empty" +
+          " to include all projects.")
+        .defaultValue("")
+        .category(CATEGORY)
+        .type(PropertyType.STRING)
+        .subCategory("Filters")
+        .index(4)
+        .build(),
+      PropertyDefinition.builder(REJECTED_PROJECTS_KEY)
+        .name("Excluded projects")
+        .description("If you want to exclude Sonarqube projects from Quboo, enter here" +
+          " their project names separated by commas, for example: my-project-3,my-project-4. Leave it empty" +
+          " to include all projects. Note: If you're using the 'Selected projects' list, this list has no effect.")
+        .defaultValue("")
+        .category(CATEGORY)
+        .subCategory("Filters")
+        .type(PropertyType.STRING)
+        .index(5)
         .build()
     );
   }

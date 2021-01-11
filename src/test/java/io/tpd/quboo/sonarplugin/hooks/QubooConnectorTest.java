@@ -177,15 +177,18 @@ public class QubooConnectorTest {
     final Issue issue2 = new Issue().withAssignee("player2").withResolution("closed").withDebt("1h")
       .withRule("InsufficientCoverage").withKey("issue-2").withProject("project").withAuthor("author")
       .withSeverity("major").withStatus("fixed");
-    final Paging paging = new Paging().withPageIndex(1).withPageSize(2).withTotal(3);
-    return new Issues().withIssues(Arrays.asList(issue1, issue2)).withPaging(paging);
+    final Issue issue3 = new Issue().withAssignee("player2").withResolution("closed").withDebt("1h")
+      .withRule("InsufficientCoverage").withKey("issue-2").withProject("project-x").withAuthor("author")
+      .withSeverity("major").withStatus("fixed"); // should be excluded
+    final Paging paging = new Paging().withPageIndex(1).withPageSize(3).withTotal(4);
+    return new Issues().withIssues(Arrays.asList(issue1, issue2, issue3)).withPaging(paging);
   }
 
   private Issues generateIssuesPage2() {
     final Issue issue1 = new Issue().withAssignee("player1").withResolution("open").withDebt("1h")
       .withRule("InsufficientCoverage").withKey("issue-3").withProject("project").withAuthor("author")
       .withSeverity("major").withStatus("open").withType("RELIABILITY").withTags(Lists.list("tag"));
-    final Paging paging = new Paging().withPageIndex(2).withPageSize(2).withTotal(3);
+    final Paging paging = new Paging().withPageIndex(2).withPageSize(3).withTotal(4);
     return new Issues().withIssues(Collections.singletonList(issue1)).withPaging(paging);
   }
 
@@ -246,6 +249,8 @@ public class QubooConnectorTest {
     map.put(QubooProperties.ACCESS_KEY, ACCESS_KEY_VALUE);
     map.put(QubooProperties.SECRET_KEY, SECRET_KEY_VALUE);
     map.put(QubooProperties.TOKEN_KEY, TOKEN_VALUE);
+    map.put(QubooProperties.SELECTED_PROJECTS_KEY, "");
+    map.put(QubooProperties.REJECTED_PROJECTS_KEY, "project-y, project-x");
     return map;
   }
 
