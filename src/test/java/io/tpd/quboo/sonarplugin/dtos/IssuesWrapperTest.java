@@ -23,9 +23,9 @@ public class IssuesWrapperTest {
   @Test
   public void issueWithoutProjectIncluded() {
     Issues issues = buildIssuesWithProjects(null, null);
-    List<String> selected = projects("project1");
-    List<String> rejected = projects("project2");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList("project1");
+    List<String> rejected = toList("project2");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).hasSize(2);
   }
@@ -33,9 +33,9 @@ public class IssuesWrapperTest {
   @Test
   public void issueWithNoMatchIncluded() {
     Issues issues = buildIssuesWithProjects("project3");
-    List<String> selected = projects();
-    List<String> rejected = projects("project2");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList();
+    List<String> rejected = toList("project2");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).hasSize(1);
   }
@@ -43,9 +43,9 @@ public class IssuesWrapperTest {
   @Test
   public void issueWithSelectedMatchIncluded() {
     Issues issues = buildIssuesWithProjects("project1");
-    List<String> selected = projects("project1");
-    List<String> rejected = projects("project3");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList("project1");
+    List<String> rejected = toList("project3");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).hasSize(1);
   }
@@ -53,9 +53,9 @@ public class IssuesWrapperTest {
   @Test
   public void issueWithNoSelectedMatchExcluded() {
     Issues issues = buildIssuesWithProjects("project2");
-    List<String> selected = projects("project1");
-    List<String> rejected = projects();
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList("project1");
+    List<String> rejected = toList();
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).isEmpty();
   }
@@ -63,9 +63,9 @@ public class IssuesWrapperTest {
   @Test
   public void issueWithDoubleMatchNotExcluded() {
     Issues issues = buildIssuesWithProjects("project1");
-    List<String> selected = projects("project1");
-    List<String> rejected = projects("project1");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList("project1");
+    List<String> rejected = toList("project1");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).hasSize(1);
   }
@@ -73,9 +73,9 @@ public class IssuesWrapperTest {
   @Test
   public void allIssuesIncludedWithEmptyFilters() {
     Issues issues = buildIssuesWithProjects("project1", null, "project2", "project3");
-    List<String> selected = projects();
-    List<String> rejected = projects();
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList();
+    List<String> rejected = toList();
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).hasSize(4);
   }
@@ -83,9 +83,9 @@ public class IssuesWrapperTest {
   @Test
   public void multipleExcluded() {
     Issues issues = buildIssuesWithProjects("project1", null, "project2", "project3");
-    List<String> selected = projects();
-    List<String> rejected = projects("project1", "project3");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList();
+    List<String> rejected = toList("project1", "project3");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).extracting("project").containsExactlyInAnyOrder(null, "project2");
   }
@@ -93,14 +93,32 @@ public class IssuesWrapperTest {
   @Test
   public void bothFilters1() {
     Issues issues = buildIssuesWithProjects("project1", null, "project2", "project3", "project5");
-    List<String> selected = projects("project2");
-    List<String> rejected = projects("project1", "project3");
-    w.filterAndAddIssues(issues, selected, rejected, null);
+    List<String> selected = toList("project2");
+    List<String> rejected = toList("project1", "project3");
+    w.filterAndAddIssues(issues, selected, rejected, null, null);
 
     assertThat(w.getIssues()).extracting("project").containsExactlyInAnyOrder(null, "project2");
   }
 
-  private List<String> projects(String... s) {
+  @Test
+  public void issueWithSelectedUserList() {
+    Issues issues = buildIssuesWithAssignees("johndoe", "pepe");
+    List<String> selectedUsers = toList("pepe");
+    w.filterAndAddIssues(issues, null, null, selectedUsers, null);
+
+    assertThat(w.getIssues()).hasSize(1);
+  }
+
+  @Test
+  public void issueWithAllSelectedUsersList() {
+    Issues issues = buildIssuesWithAssignees("johndoe", "pepe");
+    List<String> selectedUsers = toList("pepe", "johndoe");
+    w.filterAndAddIssues(issues, null, null, selectedUsers, null);
+
+    assertThat(w.getIssues()).hasSize(2);
+  }
+
+  private List<String> toList(String... s) {
     List<String> selected = new ArrayList<>();
     if(s != null) {
       selected.addAll(Arrays.asList(s));
@@ -114,6 +132,17 @@ public class IssuesWrapperTest {
     for (String project : projects) {
       Issue i = new Issue();
       i.setProject(project);
+      issues.getIssues().add(i);
+    }
+    return issues;
+  }
+
+  private Issues buildIssuesWithAssignees(String... assignees) {
+    Issues issues = new Issues();
+    issues.setIssues(new ArrayList<>());
+    for (String assignee : assignees) {
+      Issue i = new Issue();
+      i.setAssignee(assignee);
       issues.getIssues().add(i);
     }
     return issues;

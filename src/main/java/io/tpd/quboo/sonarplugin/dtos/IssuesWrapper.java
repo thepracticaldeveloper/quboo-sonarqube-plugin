@@ -27,9 +27,12 @@ public class IssuesWrapper {
   public void filterAndAddIssues(final Issues issues,
                                  final List<String> selectedProjects,
                                  final List<String> excludedProjects,
+                                 final List<String> selectedUsers,
                                  final String sonarVersion) {
     log.info("Quboo project filters - Included: {} | Excluded: {}",
       selectedProjects, excludedProjects);
+    log.info("Quboo user filter - Included: {}",
+      selectedUsers);
     this.issues.addAll(
       issues.getIssues().stream()
         .filter(issue -> issue.getProject() == null ||
@@ -41,6 +44,9 @@ public class IssuesWrapper {
           excludedProjects == null || excludedProjects.isEmpty() ||
           !excludedProjects.contains(issue.getProject())
         )
+        .filter(issue -> issue.getAssignee() == null ||
+          selectedUsers == null || selectedUsers.isEmpty() ||
+          selectedUsers.contains(issue.getAssignee()))
         .filter(issue -> !QubooCache.INSTANCE.inCache(issue))
         .collect(Collectors.toList())
     );

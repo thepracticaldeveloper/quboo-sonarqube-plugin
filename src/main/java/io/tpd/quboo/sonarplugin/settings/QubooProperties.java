@@ -36,6 +36,7 @@ public class QubooProperties {
   public static final String CATEGORY = "Quboo";
   public static final String SELECTED_PROJECTS_KEY = "sonar.quboo.selected-projects";
   public static final String REJECTED_PROJECTS_KEY = "sonar.quboo.rejected-projects";
+  public static final String SELECTED_USERS_KEY = "sonar.quboo.selected-users";
 
   private QubooProperties() {
     // only statics
@@ -88,6 +89,17 @@ public class QubooProperties {
         .subCategory("Filters")
         .type(PropertyType.STRING)
         .index(5)
+        .build(),
+      PropertyDefinition.builder(SELECTED_USERS_KEY)
+        .name("Selected users")
+        .description("If you want to select a limited set of users that will participate in Quboo, " +
+          "enter here their login names (usernames in Sonarqube) separated by commas, for example: janedoe,johndoe. Leave it empty " +
+          "to include all users.")
+        .defaultValue("")
+        .category(CATEGORY)
+        .subCategory("Filters")
+        .type(PropertyType.STRING)
+        .index(6)
         .build()
     );
   }

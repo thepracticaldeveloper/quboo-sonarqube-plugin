@@ -35,6 +35,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
   private OkHttpClient http;
   private List<String> selectedProjects;
   private List<String> rejectedProjects;
+  private List<String> selectedUsers;
 
   public QubooConnector(final Server server) {
     this.http = new HttpClients().getQubooTrustedOkHttpClient();
@@ -55,8 +56,9 @@ public class QubooConnector implements PostProjectAnalysisTask {
     final String qubooKey = analysis.getScannerContext().getProperties().get(QubooProperties.ACCESS_KEY);
     final String qubooSecret = analysis.getScannerContext().getProperties().get(QubooProperties.SECRET_KEY);
     final String token = analysis.getScannerContext().getProperties().get(QubooProperties.TOKEN_KEY);
-    this.selectedProjects = extractProjectList(analysis.getScannerContext().getProperties().get(QubooProperties.SELECTED_PROJECTS_KEY));
-    this.rejectedProjects = extractProjectList(analysis.getScannerContext().getProperties().get(QubooProperties.REJECTED_PROJECTS_KEY));
+    this.selectedProjects = extractCommaSeparatedList(analysis.getScannerContext().getProperties().get(QubooProperties.SELECTED_PROJECTS_KEY));
+    this.rejectedProjects = extractCommaSeparatedList(analysis.getScannerContext().getProperties().get(QubooProperties.REJECTED_PROJECTS_KEY));
+    this.selectedUsers = extractCommaSeparatedList(analysis.getScannerContext().getProperties().get(QubooProperties.SELECTED_USERS_KEY));
     if (!isEmpty(token)) {
       log.info("A token will be used to connect to SonarQube server");
     }
@@ -75,16 +77,16 @@ public class QubooConnector implements PostProjectAnalysisTask {
     }
   }
 
-  private List<String> extractProjectList(final String commaSeparatedProjects) {
-    if (StringUtils.isBlank(commaSeparatedProjects)) {
+  private List<String> extractCommaSeparatedList(final String commaSeparatedList) {
+    if (StringUtils.isBlank(commaSeparatedList)) {
       return new ArrayList<>();
     } else {
-      List<String> projects = new ArrayList<>();
-      String[] projectArray = commaSeparatedProjects.trim().split(",");
-      for (String p : projectArray) {
-        projects.add(p.trim()); // in case of spaces between commas
+      List<String> list = new ArrayList<>();
+      String[] array = commaSeparatedList.trim().split(",");
+      for (String p : array) {
+        list.add(p.trim()); // in case of spaces between commas
       }
-      return projects;
+      return list;
     }
   }
 
@@ -124,7 +126,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
           final String body = response.body().string();
           final Issues issues = mapper.readValue(body, Issues.class);
           log.info("Quboo plugin got {} issues", issues.getIssues().size());
-          wrapper.filterAndAddIssues(issues, selectedProjects, rejectedProjects, server.getVersion());
+          wrapper.filterAndAddIssues(issues, selectedProjects, rejectedProjects, selectedUsers, server.getVersion());
           moreData = moreData(issues.getPaging(), issues.getIssues().size());
           pageNumber++;
           if (pageNumber > 50) { // there is a hard limit in Sonar API that doesn't allow querying more than 10K results
