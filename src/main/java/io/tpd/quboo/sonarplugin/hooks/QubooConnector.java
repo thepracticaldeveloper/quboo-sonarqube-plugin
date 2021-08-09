@@ -117,7 +117,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
     while (moreData) {
       try {
         final Request.Builder request = new Request.Builder()
-          .url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&ps=200&p=" + pageNumber).get();
+          .url(server.getPublicRootUrl() + "/api/issues/search?assigned=true&s=UPDATE_DATE&asc=false&ps=200&p=" + pageNumber).get();
         addAuthorizationIfNeeded(request, token);
         final Request r = request.build();
         log.info("Quboo plugin getting issues from {}", r.url().toString());
