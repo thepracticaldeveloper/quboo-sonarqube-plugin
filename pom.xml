@@ -40,6 +40,8 @@
     <sonar.sources>src/main/java</sonar.sources>
     <jackson.version>2.10.3</jackson.version>
     <sonar.exclusions>**/pojos/*.java</sonar.exclusions>
+    <sonar.organization>thepracticaldeveloper</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
   <dependencies>
