@@ -138,7 +138,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
           break;
         }
       } catch (final Exception e) {
-        log.error("Quboo could not fetch issues from the server: " + e.getMessage());
+        log.error("Quboo could not fetch issues from the server: " + e.getMessage(), e);
         break;
       }
     }
@@ -194,7 +194,7 @@ public class QubooConnector implements PostProjectAnalysisTask {
           break;
         }
       } catch (final Exception e) {
-        log.error("Quboo could not fetch users from the server: " + e.getMessage());
+        log.error("Quboo could not fetch users from the server: " + e.getMessage(), e);
         break;
       }
     }
