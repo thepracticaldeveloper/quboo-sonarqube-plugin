@@ -38,7 +38,7 @@
     <sonar.apiVersion>7.4</sonar.apiVersion>
     <jdk.min.version>1.8</jdk.min.version>
     <sonar.sources>src/main/java</sonar.sources>
-    <jackson.version>2.10.3</jackson.version>
+    <jackson.version>2.13.4.1</jackson.version>
     <sonar.exclusions>**/pojos/*.java</sonar.exclusions>
     <sonar.organization>thepracticaldeveloper</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
